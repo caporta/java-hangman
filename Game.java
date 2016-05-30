@@ -10,7 +10,19 @@ public class Game {
     mMisses = "";
   }
 
+  private char validateGuess(char letter) {
+    if (!Character.isLetter(letter)) {
+      throw new IllegalArgumentException("A letter is required");
+    }
+    letter = Character.toLowerCase(letter);
+    if ((mHits.indexOf(letter) != -1) || (mMisses.indexOf(letter) != -1)) {
+      throw new IllegalArgumentException("'" + letter + "'" + " has already been guessed");
+    }
+    return letter;
+  }
+
   public boolean applyGuess(char letter) {
+    letter = validateGuess(letter);
     boolean isHit = (mAnswer.indexOf(letter) != -1);
     if (isHit) {
       mHits += letter;
